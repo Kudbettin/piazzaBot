@@ -1,4 +1,4 @@
-#Piazza Bot
+# Piazza Bot
 
 When run, responds to not yet responed !RecommendMe calls in a Piazza class
 
