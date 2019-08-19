@@ -22,6 +22,11 @@ Install LDA Mallet and elasticsearch
 
 pip3 install -r requirements.txt
 
+## Usage
+
+run elasticsearch
+python3 cavebot.py
+
 
 ### Notes and Future work
 
