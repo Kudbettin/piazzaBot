@@ -29,7 +29,7 @@ pip3 install -r requirements.txt
 
 - I excluded how to get network id's. For more information, check piazza api
 
-- Can integrate the cosine similarity method (wiki movies) to find more accurate results.
+- Can integrate more rigorous modeling to get more interesting results.
 
 - Can do more visualization (easy pca of the topic vectors for example). However, it's hard to automate sending non-text content. 
 	- For this reason pyLDAvis results are not sent. (see lda.html)
