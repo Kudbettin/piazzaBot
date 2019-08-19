@@ -1,24 +1,35 @@
-# Piazza Bot
+#Piazza Bot
 
-When run, responds to not yet responed !RecommendMe calls in a Piazza class
+When run, responds to not yet responed !RecommendMe calls in a Piazza class.
 
 ## Issues and TODO
 
-make sure that you’re pulling the correct document from corpus!
-- not being able to see the hidden posts messes up the implicit indexing (post["nr"] - 1 == index of the document in corpus)
-
-be able to show posts with similar topics
-
-Calling simple preprocess twice
-Stopwords (add html)
-hidden posts affects corpus index
 load option for everyhting
+	- Currently pickles many things
+
+Everything is stored twice. It's less elegant, but since it doesn't affect the performance due to size of the classes, I can't find the incentive to combine .txt and elasticsearch data
 
 
 ## Resources
 
-TODO
+become familiar with gensim:
+https://www.machinelearningplus.com/nlp/gensim-tutorial/
+
 
 ## Installation
 
-TODO
+Install LDA Mallet and elasticsearch
+
+pip3 install -r requirements.txt
+
+
+### Notes and Future work
+
+- Since I only had one account and a number of piazza threads that I could play with, you may get different/unintended results with your credentials
+
+- I excluded how to get network id's. For more information, check piazza api
+
+- Can integrate the cosine similarity method (wiki movies) to find more accurate results.
+
+- Can do more visualization (easy pca of the topic vectors for example). However, it's hard to automate sending non-text content. 
+	- For this reason pyLDAvis results are not sent. (see lda.html)

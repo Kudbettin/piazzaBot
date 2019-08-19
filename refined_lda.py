@@ -1,7 +1,5 @@
 import re
 import numpy as np
-import pandas as pd
-from pprint import pprint
 
 # Gensim
 import gensim
@@ -14,7 +12,8 @@ import spacy
 
 # Plotting tools
 import pyLDAvis
-import pyLDAvis.gensim  
+import pyLDAvis.gensim  # don't skip this
+import matplotlib.pyplot as plt
 
 from nltk.corpus import stopwords
 from pathlib import Path
@@ -22,7 +21,7 @@ from pathlib import Path
 import pickle
 
 import piazza_class2txt
-# Enable logging for gensim 
+# Enable logging for gensim - optional
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
 
@@ -42,6 +41,7 @@ def main(file_name, num_topics=26, write=True, ret=True, iterations=1000):
 	corpus = [id2word.doc2bow(doc) for doc in cleaned_documents]
 
 
+	# path depends on mallet installation
 	p = Path("./mallet-2.0.8/bin/mallet")
 
 	# mallet_path = '/Mallet/bin/mallet' # update this path
@@ -58,14 +58,18 @@ def main(file_name, num_topics=26, write=True, ret=True, iterations=1000):
 			pickle.dump(corpus, file)
 		with open("id2word.txt", "wb") as file:
 			pickle.dump(id2word, file)
+		with open("cleaned_documents.txt", "wb") as file:
+			pickle.dump(cleaned_documents, file)
 
 	if ret:
-		return corpus, lda_model, id2word
+		return corpus, lda_model, id2word, cleaned_documents
 
 
 def clean(raw_data):
 	#TODO add mark down stopwords
-	stop_words = stopwords.words('english')
+	stop_words = stopwords.words("english")
+	# stop_words.extend(["[" + str(i) + "]" for i in range(12)])
+	# stop_words.extend(["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"])
 
 	# Remove new line characters
 	data = [re.sub('\s+', ' ', sent) for sent in raw_data]
@@ -73,19 +77,21 @@ def clean(raw_data):
 	data_words = [gensim.utils.simple_preprocess(str(sentence), deacc=True) for sentence in data]
 
 	# Remove Stop Words
-	data_words_nostops = [[word for word in simple_preprocess(str(doc)) if word not in stop_words] for doc in data_words]
+	data_words_nostops = [[word for word in doc if word not in stop_words] for doc in data_words]
+	# data_words_nostops = [[word for word in simple_preprocess(str(doc)) if word not in stop_words] for doc in data_words]
 
-	# Build the bigram and trigram models
+
+	# Build the bigram model
 	bigram = gensim.models.Phrases(data_words, min_count=5, threshold=100) # higher threshold fewer phrases.
-	trigram = gensim.models.Phrases(bigram[data_words], threshold=100)  
 
-	# Faster way to get a sentence clubbed as a trigram/bigram
+	# Faster way to get a sentence clubbed as a bigram
 	bigram_mod = gensim.models.phrases.Phraser(bigram)
-	# trigram_mod = gensim.models.phrases.Phraser(trigram)
 
 	# Form Bigrams
 	data_words_bigrams = [bigram_mod[doc] for doc in data_words_nostops]
 
+	# Initialize spacy 'en' model, keeping only tagger component (for efficiency)
+	# python3 -m spacy download en
 	nlp = spacy.load('en', disable=['parser', 'ner'])
 
 	# Do lemmatization keeping only noun, adj, vb, adv
