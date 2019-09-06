@@ -58,8 +58,7 @@ class CaveBot():
 		if len(sys.argv) != 5:
 			print("Usage: python3 cave_bot.py username password network_id network_name")
 
-		# I suspect there is a prettier way to do this
-		bot = CaveBot(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+		bot = CaveBot(*sys.argv[1:])
 
 
 

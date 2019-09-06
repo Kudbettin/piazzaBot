@@ -1,0 +1,8 @@
+numpy
+piazza_api
+elasticsearch
+elasticsearch_dsl
+gensim
+spacy
+pyLDAvis
+matplotlib
