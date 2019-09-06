@@ -31,9 +31,11 @@ python3 cavebot.py
 
 ### Notes and Future work
 
-- Since I only had one account and a number of piazza threads that I could play with, you may get different/unintended results with your credentials
-
 - I excluded how to get network id's. For more information, check piazza api
+
+- I realize that it's annoying for anyone to use this to let them install their own mallet _and_ learn how to get network id's. So maaaaybe automate doing that sometime.
+
+- Since I only had one account and a number of piazza threads that I could play with, you may get different/unintended results with your credentials
 
 - Can integrate more rigorous modeling to get more interesting results.
 
